@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAST START — анкета для твоего портфолио</title>
+<meta name="description" content="Короткая анкета на 7–10 минут: расскажи о своём опыте, и мы соберём основу для твоего сайта-портфолио.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23D92727'/%3E%3Ctext x='16' y='23' font-size='20' font-weight='900' text-anchor='middle' fill='white' font-family='Arial'%3EF%3C/text%3E%3C/svg%3E">
+<style>
+:root{--red:#D92727;--ink:#111;--g:#E2E2E2;--mut:#555;--p:clamp(20px,5vw,56px);--f:system-ui,-apple-system,"Segoe UI",Roboto,Arial,Helvetica,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f);color:var(--ink);background:#fff;line-height:1.55;font-size:1.05rem}
+header{padding:18px var(--p);display:flex;justify-content:space-between;align-items:baseline;gap:16px;border-bottom:1px solid var(--g)}
+.logo{font-weight:900;letter-spacing:-.02em}.logo i{color:var(--red);font-style:normal}
+#pl{font-size:.9rem;color:var(--mut)}
+#bar{height:3px;background:var(--g)}#bar b{display:block;height:100%;width:0;background:var(--red);transition:width .3s}
+main{max-width:760px;margin:0 auto;padding:clamp(28px,6vw,72px) 20px}
+h1{font-size:clamp(2.3rem,8vw,4.8rem);font-weight:900;line-height:.98;letter-spacing:-.035em;margin-bottom:.45em}
+h2{font-size:clamp(1.9rem,5.5vw,3.2rem);font-weight:900;line-height:1;letter-spacing:-.03em;margin-bottom:.5em}
+h3{font-size:1.5rem;font-weight:900;letter-spacing:-.02em;margin-bottom:8px}
+.ey{color:var(--red);font-weight:700;font-size:.9rem;margin-bottom:12px}
+.lead{font-size:1.15rem;max-width:34em;margin-bottom:20px}
+.sm{font-size:.92rem;color:var(--mut);max-width:36em;margin-bottom:24px}
+.q{padding:22px 0;border-top:1px solid var(--g)}
+fieldset{border:0}
+.l{display:block;font-weight:700;font-size:1.12rem;margin-bottom:4px}
+.l i{font-weight:400;font-size:.8rem;color:var(--mut);font-style:normal;margin-left:8px}
+.h{color:var(--mut);font-size:.92rem;margin-bottom:10px}
+input[type=text],textarea{width:100%;font:inherit;padding:12px 0;border:0;border-bottom:2px solid var(--ink);background:transparent;border-radius:0}
+textarea{min-height:100px;resize:vertical;padding:12px;border:1px solid var(--ink)}
+input[type=text]:focus,textarea:focus{outline:0;border-color:var(--red)}
+.oth{margin-top:8px}
+.o{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--g);cursor:pointer}
+.o input{accent-color:var(--red);width:20px;height:20px;flex:none;margin-top:3px}
+.err{color:var(--red);font-weight:600;margin-top:8px}
+.proj{border:1px solid var(--ink);padding:0 20px 8px;margin:24px 0}
+.proj .q:first-of-type{border-top:0}
+.ph{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0}
+.btn{display:inline-block;background:var(--red);color:#fff;border:2px solid var(--red);font:inherit;font-weight:700;padding:15px 30px;cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--ink);border-color:var(--ink)}
+.btn[disabled]{opacity:.5;cursor:wait}
+.bt{background:none;border:0;font:inherit;font-weight:600;color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:4px;cursor:pointer;padding:8px 0}
+.bt:hover{color:var(--red)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:32px;padding-top:24px;border-top:1px solid var(--ink)}
+.fin{margin-top:32px;border-top:1px solid var(--ink);padding-top:24px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+a{color:var(--red);font-weight:600}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+footer{max-width:760px;margin:0 auto;padding:0 20px 48px;display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><span class="logo">FAST<i>.</i>START</span><span id="pl" aria-live="polite"></span></header>
+<div id="bar" role="presentation"><b></b></div>
+<main id="app"><noscript>Для анкеты нужен включённый JavaScript.</noscript></main>
+<footer><button class="bt" type="button" data-act="reset">Начать заново</button><span class="sm" style="margin:0">Пока ты заполняешь анкету, ответы хранятся только в твоём браузере. После нажатия «Отправить» они уходят владельцу сервиса для работы над заказом.</span></footer>
+
+<script>
+(function(){
+"use strict";
+/* ===== НАСТРОЙКА: вставьте сюда адрес веб-приложения Google Apps Script (см. README.md) ===== */
+var CONFIG={ENDPOINT:"",MAXBODY:120000};
+/* ===== дальше код менять не нужно ===== */
+var KEY="fs_brief_v1",NONE="Пока нечего показать",YES="Да, можно использовать название и материалы",NOEDU="Пока нет";
+var ST=["Знакомство","Позиционирование","Опыт и проекты","Навыки и развитие","Визуальные материалы и завершение"];
+var TT=["Давай знакомиться","Чем ты отличаешься","Твой опыт и проекты","Что ты умеешь","Последние детали"];
+var SPH=["Кофейни, рестораны и гастрономия","Красота и косметика","Мода и лайфстайл","Медиа и культура","Образование","Технологии и IT","E-commerce и розничная торговля","Агентства и студии","Не принципиальна конкретная сфера","Другая сфера"];
+var Q=[
+{id:"name",s:0,t:"text",k:"Имя",l:"Как тебя зовут?",req:1,ac:"name"},
+{id:"spec",s:0,t:"one",k:"Специализация",l:"Как ты хочешь представляться профессионально?",o:["SMM-специалист","Контент-маркетолог","Контент-менеджер","Копирайтер","Редактор","Маркетолог","Специалист по продвижению","Другое"]},
+{id:"exp",s:0,t:"one",k:"Стаж в профессии",l:"Как давно ты работаешь в профессии?",o:["Пока нет коммерческого опыта","До 6 месяцев","От 6 месяцев до 1 года","От 1 до 2 лет","От 2 до 4 лет","Более 4 лет"]},
+{id:"goal",s:0,t:"multi",k:"Цель портфолио",l:"Для чего тебе портфолио?",o:["Найти первую работу","Найти новую работу","Перейти в более крупную компанию","Найти проекты на фрилансе","Повысить профессиональный уровень и лучше презентовать себя","Систематизировать уже имеющиеся работы","Другое"]},
+{id:"field",s:0,t:"multi",k:"Желаемые сферы",l:"В какой сфере ты хотел(а) бы работать?",o:SPH},
+{id:"city",s:0,t:"text",k:"Где находится",l:"Где ты находишься?",h:"Город или «готов(а) работать удалённо»."},
+{id:"tasks",s:1,t:"multi",k:"Интересные задачи",l:"Какие задачи тебе интереснее всего?",o:["Придумывать идеи и концепции","Разрабатывать контент-стратегию","Составлять контент-планы","Писать тексты","Придумывать рубрики и форматы","Снимать и монтировать короткие видео","Работать с визуалом и референсами","Вести социальные сети","Анализировать статистику","Работать с блогерами и партнёрами","Организовывать съёмки и продакшен","Запускать рекламу","Работать с брендом и его голосом","Другое"]},
+{id:"brands",s:1,t:"text",k:"Интересные компании",l:"Какие компании тебе интересны?",h:"Можно назвать 2–5 брендов, компаний или агентств. Если пока не определился(лась), оставь пустым."},
+{id:"strong",s:1,t:"multi",max:3,k:"Сильные стороны",l:"В чём ты особенно хорош(а)?",h:"Выбери до трёх.",o:["Быстро придумываю идеи","Хорошо пишу","Чувствую визуальный стиль","Умею разбираться в аудитории","Замечаю детали и ошибки","Умею организовать процесс","Хорошо понимаю бренды","Умею анализировать результаты","Легко нахожу общий язык с людьми","Быстро учусь","Пока сложно определить свои сильные стороны","Другое"]},
+{id:"about",s:1,t:"long",k:"О себе",l:"Что ещё важно знать о тебе как о специалисте?",h:"Необязательно писать красиво. Хватит одного-двух предложений о подходе к работе, интересах или особенностях."},
+{id:"hasproj",s:2,t:"one",k:"Есть ли проекты",l:"Есть ли у тебя проекты, которые можно показать?",req:1,o:["Да, есть коммерческие проекты","Есть учебные или личные проекты","Есть и коммерческие, и учебные проекты",NONE]},
+{id:"practice",s:2,t:"long",k:"Практические задачи, которые умеет выполнять",l:"Какие практические задачи ты умеешь выполнять?",h:"Ничего страшного, что проектов пока нет. Расскажи, с чем справишься уже сейчас.",show:a=>a.hasproj===NONE},
+{id:"skills",s:3,t:"multi",k:"Практические умения",l:"Что ты уже умеешь делать на практике?",o:["Исследовать аудиторию","Анализировать конкурентов","Составлять контент-планы","Разрабатывать рубрики","Писать тексты","Работать с tone of voice","Создавать визуальные концепции","Работать с фото и видео","Монтировать короткие видео","Работать с аналитикой социальных сетей","Готовить отчёты","Работать с блогерами","Настраивать рекламные кампании","Работать с дизайнерами и подрядчиками","Организовывать съёмки","Пользоваться AI-инструментами","Другое"]},
+{id:"tools",s:3,t:"multi",k:"Инструменты",l:"С какими инструментами ты работал(а)?",h:"Выбирай только те, которыми действительно пользовался(лась).",o:["Figma","Canva","Photoshop","Illustrator","CapCut","Adobe Premiere Pro","Excel или Google Sheets","Notion","Telegram","VK","Instagram","TikTok","Яндекс Метрика","Встроенная аналитика социальных сетей","Другие инструменты","Пока нет уверенного опыта"]},
+{id:"edu",s:3,t:"one",k:"Образование и курсы",l:"Есть ли у тебя курсы, образование или профессиональные сертификаты?",o:["Есть профильное образование","Есть пройденные курсы","Есть и образование, и курсы",NOEDU]},
+{id:"edu_i",s:3,t:"long",k:"Детали образования",l:"Что именно?",h:"Название, учебное заведение или платформа и год окончания.",show:a=>a.edu&&a.edu!==NOEDU},
+{id:"work",s:3,t:"multi",max:3,k:"Как работает над задачами",l:"Как ты работаешь над задачами?",h:"Выбери до трёх.",o:["Самостоятельно организую свою работу","Умею принимать обратную связь","Уточняю задачу, если чего-то не хватает","Объясняю свои решения","Внимательно отношусь к деталям","Соблюдаю договорённости и сроки","Умею работать в команде","Быстро осваиваю новые инструменты","Пока развиваю эти навыки"]},
+{id:"work_e",s:3,t:"long",k:"Пример к выбранным качествам",l:"Есть пример, который подтверждает одну из выбранных характеристик?",h:"Одна короткая история подойдёт."},
+{id:"photo",s:4,t:"one",k:"Фотография для сайта",l:"Есть ли у тебя фотография для сайта?",o:["Да, есть подходящая фотография","Есть фотография, но не уверен(а), что она подойдёт","Пока нет","Не хочу использовать фотографию"]},
+{id:"photo_l",s:4,t:"url",k:"Ссылка на фотографию",l:"Ссылка на файл или папку с фото",h:"Загружать файлы сюда не нужно, достаточно ссылки.",show:a=>a.photo&&/^(Да|Есть)/.test(a.photo)},
+{id:"links",s:4,t:"long",k:"Ссылки на работы",l:"Есть ли ссылки на твои работы?",h:"Папка с материалами, публикации, проекты. Если ссылки уже указаны в проектах, повторять не нужно."},
+{id:"style",s:4,t:"one",k:"Стиль сайта",l:"Как должен выглядеть твой сайт?",o:["Минималистичный и строгий","Редакционный, с крупной типографикой","Смелый и экспериментальный","Мягкий и эстетичный","Не знаю, выберите стиль исходя из моего опыта и сферы"]},
+{id:"likes",s:4,t:"text",k:"Понравившиеся сайты",l:"Есть сайты, которые тебе нравятся?",h:"Можно вставить ссылки."},
+{id:"contact",s:4,t:"text",k:"Контакт для сайта",l:"Куда добавить контакт для связи?",h:"Telegram, почта или другая ссылка, которую можно публично разместить на сайте.",req:1},
+{id:"c_none",s:4,t:"chk",k:"Контакт",l:"Контакта пока нет, добавим перед публикацией",h:"Перед публикацией сайта способ связи всё равно понадобится."},
+{id:"limits",s:4,t:"multi",k:"Нельзя публиковать",l:"Есть ли информация, которую нельзя публиковать?",o:["Названия отдельных компаний","Цифры и результаты","Внутренние процессы","Материалы клиентов","Личные данные","Ограничений нет","Другое"]},
+{id:"limits_n",s:4,t:"long",k:"Пояснение к ограничениям",l:"Расскажи подробнее",show:a=>(a.limits||[]).some(o=>o!=="Ограничений нет")}
+];
+var PQ=[
+{id:"p_name",t:"text",k:"Название",l:"Название проекта",h:"Бренд, компания или условное название учебного проекта."},
+{id:"p_kind",t:"one",k:"Тип проекта",l:"Что это за проект?",o:["Реальный коммерческий проект","Учебный проект","Личный проект","Тестовое задание","Волонтёрский проект","Другое"]},
+{id:"p_sph",t:"text",k:"Сфера",l:"В какой сфере проект?",h:"Например: кофейни, красота, образование."},
+{id:"p_task",t:"long",k:"Задача",l:"Какая задача стояла перед проектом?",h:"Что нужно было сделать, изменить, создать или улучшить? Одного-двух предложений достаточно."},
+{id:"p_did",t:"multi",k:"Вклад",l:"Что конкретно делал(а) ты?",o:["Исследовал(а) аудиторию","Разрабатывал(а) стратегию","Придумывал(а) идеи","Составлял(а) контент-план","Писал(а) тексты","Создавал(а) визуальные материалы","Снимал(а) или монтировал(а) видео","Публиковал(а) контент","Работал(а) с блогерами","Запускал(а) рекламу","Анализировал(а) результаты","Координировал(а) команду или подрядчиков","Выполнял(а) другие задачи"]},
+{id:"p_own",t:"long",k:"Что сделано лично",l:"Что именно ты сделал(а) сам(а)?",h:"Так мы отделим твой вклад от результата команды.",show:p=>(p.p_did||[]).length>0},
+{id:"p_res",t:"long",k:"Результат",l:"Что получилось в итоге?",h:"Если цифр нет, это нормально. Расскажи, что именно ты сделал(а)."},
+{id:"p_link",t:"url",k:"Ссылка",l:"Есть ссылка на проект или материалы?",h:"Публикация, сайт, папка с работами, презентация. Начни с https://"},
+{id:"p_learn",t:"long",k:"Чему научился(ась)",l:"Чему ты научился(ась) в этом проекте?"},
+{id:"p_perm",t:"one",k:"Разрешение на публикацию",l:"Можно ли публиковать информацию об этом проекте?",o:[YES,"Можно описать проект без названия компании","Можно использовать только отдельные материалы","Пока не уверен(а), нужно согласование"]}
+];
+var CH=[
+{id:"truth",t:"chk",lh:"Подтверждаю, что предоставленные мной сведения соответствуют действительности. Я понимаю, что материалы, разрешение на публикацию которых не подтверждено, потребуют дополнительной проверки."},
+{id:"c_terms",t:"chk",lh:"Я ознакомился(лась) с <a href=\"terms.html\" target=\"_blank\" rel=\"noopener\">условиями заказа</a> и согласен(на) с ними."},
+{id:"c_pd",t:"chk",lh:"Я даю согласие на обработку моих персональных данных для подготовки и выполнения заказа на создание сайта-портфолио. Я ознакомился(лась) с <a href=\"policy.html\" target=\"_blank\" rel=\"noopener\">Политикой обработки персональных данных</a>."}
+];
+var S={step:-1,a:{},pr:[],id:uid(),err:{},busy:false,done:false,msg:""};
+try{var r=JSON.parse(localStorage.getItem(KEY)||"null");if(r&&r.a){S.a=r.a;S.pr=r.pr||[];S.step=typeof r.step=="number"?r.step:-1;S.id=r.id||S.id}}catch(e){}
+function uid(){return window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,10)}
+function esc(x){return String(x==null?"":x).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function save(){try{var a=Object.assign({},S.a);delete a.truth;delete a.c_pd;delete a.c_terms;localStorage.setItem(KEY,JSON.stringify({a:a,pr:S.pr,step:S.step,id:S.id}))}catch(e){}}
+function findQ(id){return Q.concat(PQ,CH).filter(function(q){return q.id===id})[0]}
+function vis(q,s){return !q.show||q.show(s)}
+function okU(v){v=v.trim();if(!/^https?:\/\//i.test(v))v="https://"+v;try{var u=new URL(v);return /^https?:$/.test(u.protocol)&&u.hostname.indexOf(".")>0}catch(e){return false}}
+var URLM="Не похоже на ссылку. Проверь, что она начинается с https://";
+function er(k){return S.err[k]?'<p class="err" role="alert">'+esc(S.err[k])+'</p>':""}
+function fld(q,s,p){
+ var k=q.id+"|"+p,v=s[q.id],at=' data-i="'+q.id+'" data-p="'+p+'"',h='<div class="q">',lab=q.req?"":" <i>можно пропустить</i>",hint=q.h||q.max&&!q.h?'<p class="h">'+esc(q.h||"")+'</p>':"";
+ if(q.t=="chk")return h+'<label class="o"><input type="checkbox"'+at+(v?" checked":"")+'><span>'+(q.lh||esc(q.l))+'</span></label>'+(q.h?'<p class="h">'+esc(q.h)+'</p>':"")+er(k)+'</div>';
+ if(q.t=="one"||q.t=="multi"){
+  h+='<fieldset><legend class="l">'+esc(q.l)+lab+'</legend>'+hint+q.o.map(function(o,j){var on=q.t=="one"?v===o:(v||[]).indexOf(o)>-1;return '<label class="o"><input type="'+(q.t=="one"?"radio":"checkbox")+'" name="'+q.id+p+'"'+at+' data-v="'+j+'"'+(on?" checked":"")+'><span>'+esc(o)+'</span></label>'}).join("");
+  var sel=q.t=="one"?[v]:(v||[]);
+  if(sel.some(function(o){return /друг/i.test(o||"")}))h+='<input type="text" class="oth" aria-label="Уточни, что именно" placeholder="Уточни, что именно"'+at+' data-o="1" value="'+esc(s[q.id+"_o"])+'">';
+  return h+er(k)+'</fieldset></div>'}
+ var f="f"+q.id+"_"+p;
+ return h+'<label class="l" for="'+f+'">'+esc(q.l)+lab+'</label>'+hint+(q.t=="long"?'<textarea id="'+f+'"'+at+'>'+esc(v)+'</textarea>':'<input type="text" id="'+f+'"'+at+(q.t=="url"?' inputmode="url" autocomplete="url"':'')+(q.ac?' autocomplete="'+q.ac+'"':'')+' value="'+esc(v)+'">')+er(k)+'</div>'}
+function intro(){return '<h1>Привет! Давай соберём твой опыт в портфолио</h1><p class="lead">Этот опрос поможет мне лучше понять твои сильные стороны, опыт и задачи, которые тебе интересны. На основе ответов я создам сайт, который будет похож именно на тебя.</p><p class="sm">Займёт примерно 7–10 минут. Если пока нечего рассказать о каком-то пункте, ничего страшного: его можно пропустить.</p><button class="btn" type="button" data-act="start">'+(S.a.name?"Продолжить":"Поехали")+'</button>'}
+function stage(s){
+ var h='<p class="ey">Этап '+(s+1)+' из 5 · '+ST[s]+'</p><h2>'+TT[s]+'</h2>';
+ if(s==2){h+='<p class="sm">Необязательно иметь известные бренды в портфолио. Подойдут учебные задания, личные проекты, тестовые работы, волонтёрство и задачи, которые ты выполнял(а) сам(а). Я покажу твой реальный вклад и ничего не придумаю. Нет коммерческих проектов? Учебные и личные тоже подойдут.</p>';if(!S.pr.length&&S.a.hasproj&&S.a.hasproj!==NONE)S.pr.push({})}
+ if(s==0)h+='<p class="sm">Необязательно формулировать идеально, просто расскажи, как есть.</p>';
+ Q.filter(function(q){return q.s==s&&vis(q,S.a)}).forEach(function(q){h+=fld(q,S.a,-1)});
+ if(s==2&&S.a.hasproj&&S.a.hasproj!==NONE){
+  S.pr.forEach(function(p,i){h+='<div class="proj"><div class="ph"><h3>Проект '+(i+1)+'</h3><button class="bt" type="button" data-act="del" data-n="'+i+'">Удалить</button></div>'+PQ.filter(function(q){return vis(q,p)}).map(function(q){return fld(q,p,i)}).join("")+'</div>'});
+  if(S.pr.length<3)h+='<button class="btn" type="button" data-act="add">Добавить проект</button>'}
+ if(s==4){
+  h+=CH[0]?'':'';
+  h+='<div class="fin">'+fld(CH[0],S.a,-1)+'<h3>Как мы будем работать</h3><p class="sm" style="margin-bottom:8px">После анкеты я подготовлю сайт и отправлю тебе ссылку на предварительный просмотр. Ты сможешь проверить содержание, оформление и ссылки. После согласования и оплаты я подготовлю сайт к публикации и передам тебе итоговую версию на условиях нашего заказа.</p>'+fld(CH[1],S.a,-1)+fld(CH[2],S.a,-1)+'<p class="sm">Ответы передаются владельцу сервиса для работы над заказом. Паспортные данные, дату рождения и домашний адрес указывать не нужно.</p><input class="hp" id="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">'+(S.msg?'<p class="err" role="alert">'+esc(S.msg)+'</p>':"")+'</div>'}
+ h+='<div class="nav">'+(s>0?'<button class="bt" type="button" data-act="back">Назад</button>':'<button class="bt" type="button" data-act="home">В начало</button>')+(s<4?'<button class="btn" type="button" data-act="next">Дальше</button>':'<button class="btn" type="button" data-act="send"'+(S.busy?" disabled":"")+'>'+(S.busy?"Отправляю…":"Отправить")+'</button>')+'</div>';
+ return h}
+function done(){return '<h1>Всё, готово!</h1><p class="lead">Спасибо, что рассказал(а) о себе. Я получил ответы и теперь смогу подготовить основу для твоего сайта. Если понадобится что-то уточнить, я напишу тебе.</p>'}
+function render(keep){
+ var f=document.activeElement,fk=f&&f.dataset&&f.dataset.i?'[data-i="'+f.dataset.i+'"][data-p="'+f.dataset.p+'"]'+(f.dataset.v?'[data-v="'+f.dataset.v+'"]':f.dataset.o?'[data-o]':':not([data-v]):not([data-o])'):"";
+ document.getElementById("app").innerHTML=S.done?done():S.step<0?intro():stage(S.step);
+ if(fk&&keep){var n=document.querySelector(fk);if(n)n.focus()}
+ var pct=S.done?100:S.step<0?0:(S.step+1)*20;document.querySelector("#bar b").style.width=pct+"%";
+ document.getElementById("pl").textContent=S.done||S.step<0?"":"Этап "+(S.step+1)+" из 5";
+}
+function go(n){S.step=n;S.err={};S.msg="";save();render();window.scrollTo(0,0)}
+function check(){
+ var E=[],a=S.a;function add(s,k,m){E.push({s:s,k:k,m:m})}
+ if(!(a.name||"").trim())add(0,"name|-1","Напиши, как к тебе обращаться");
+ if(!a.hasproj)add(2,"hasproj|-1","Выбери вариант. Если проектов пока нет, так и отметь");
+ if(a.hasproj&&a.hasproj!==NONE)S.pr.forEach(function(p,i){if((p.p_link||"").trim()&&!okU(p.p_link))add(2,"p_link|"+i,URLM)});
+ if(vis(findQ("photo_l"),a)&&(a.photo_l||"").trim()&&!okU(a.photo_l))add(4,"photo_l|-1",URLM);
+ if(!(a.contact||"").trim()&&!a.c_none)add(4,"contact|-1","Оставь контакт или отметь, что добавим его позже");
+ if(!a.truth)add(4,"truth|-1","Нужна отметка, чтобы продолжить");
+ if(!a.c_terms)add(4,"c_terms|-1","Нужна отметка, чтобы отправить анкету");
+ if(!a.c_pd)add(4,"c_pd|-1","Без согласия мы не сможем принять анкету");
+ return E}
+function showErr(E){S.err={};E.forEach(function(e){S.err[e.k]=e.m});render();var n=document.querySelector(".err");if(n)n.scrollIntoView({block:"center"})}
+function val(q,s){var v=s[q.id],o=s[q.id+"_o"]&&s[q.id+"_o"].trim(),m=function(x){return /друг/i.test(x)&&o?x+" ("+o+")":x};
+ v=Array.isArray(v)?v.map(m).join("; "):v&&typeof v=="string"?m(v):"";return String(v||"").trim()}
+function brief(){
+ var L=["БРИФ ДЛЯ САЙТА-ПОРТФОЛИО (FAST START)","Дата заполнения: "+new Date().toLocaleString("ru-RU"),""],a=S.a,fl=[];
+ ST.forEach(function(n,s){var rows=[];Q.forEach(function(q){if(q.s!=s||q.t=="chk"||!vis(q,a))return;var v=val(q,a);if(v)rows.push(q.k+": "+v)});
+  if(s==2&&a.hasproj&&a.hasproj!==NONE)S.pr.forEach(function(p,i){var pr=[];PQ.forEach(function(q){if(!vis(q,p))return;var v=val(q,p);if(v)pr.push("  "+q.k+": "+v)});
+   if(pr.length){rows.push("","Проект "+(i+1)+(p.p_name?": "+p.p_name.trim():"")+":");rows=rows.concat(pr);
+    if(p.p_perm!==YES)fl.push("Проект «"+(p.p_name||i+1)+"»: разрешение на публикацию"+(p.p_perm?" ограничено («"+p.p_perm+"»)":" не указано")+", нужна проверка перед публикацией")}});
+  if(rows.length){L.push("== "+ST[s].toUpperCase()+" ==");L=L.concat(rows,"")}});
+ if(a.hasproj===NONE)fl.push("Показываемых проектов нет: строить сайт на практических задачах");
+ if(!(a.contact||"").trim())fl.push("Нет контакта для сайта: добавить перед публикацией");
+ if(!a.photo||/^(Пока нет|Не хочу)/.test(a.photo))fl.push("Фотографии для сайта нет: решение без фотографии");
+ else if(/^Есть фотография/.test(a.photo))fl.push("Не уверена пригодность фотографии: проверить");
+ if(val(findQ("limits"),a)&&!/^Ограничений нет$/.test(val(findQ("limits"),a)))fl.push("Есть ограничения на публикацию: учесть строго");
+ if(fl.length){L.push("== ТРЕБУЕТ УТОЧНЕНИЯ ==");fl.forEach(function(x){L.push("- "+x)})}
+ return L.join("\n")}
+function prompt(b){return ["ТЫ — опытный веб-дизайнер, редактор портфолио и frontend-разработчик. На основе предоставленного брифа создай персональный сайт-портфолио специалиста.","","Цель: представить реальный опыт человека ясно, профессионально и визуально выразительно, с учётом его специализации, карьерной цели и уровня опыта.","","Требования к содержанию:","1. Сформируй понятное профессиональное позиционирование на основе фактов из брифа.","2. Подготовь убедительный первый экран с заголовком, который конкретно характеризует специалиста. Избегай клише вроде «креативный профессионал», «создаю уникальный контент», «превращаю идеи в результат».","3. Покажи проекты как кейсы: контекст, задача, личный вклад, выполненные действия, результат и выводы, если эти данные предоставлены.","4. Отделяй личную работу специалиста от результатов команды.","5. Не выдумывай метрики, бюджеты, работодателей, клиентов, отзывы, сертификаты, должности, результаты и опыт.","6. Если нет числовых показателей, не пытайся искусственно создать их. Показывай конкретные выполненные задачи и материалы.","7. Учебные и личные проекты обозначай честно.","8. Не публикуй информацию, которую клиент запретил раскрывать или на которую не подтверждено разрешение.","9. Если информации не хватает, используй нейтральную формулировку или опусти блок. Не заполняй пробелы выдуманными данными.","10. Не включай в сайт служебные заметки, инструкции для разработчика и черновые комментарии.","","Требования к дизайну:","- Создай индивидуальный визуальный язык, подходящий сфере и личности специалиста.","- Используй продуманную типографику, сетку, отступы и композицию.","- Не своди сайт к набору однотипных карточек.","- Обеспечь хорошую читаемость и адаптацию под мобильные устройства.","- Не используй фотографии, изображения проектов или логотипы, которых нет в предоставленных материалах, как будто они настоящие.","- Если фотографий нет, выбери подходящее решение без фотографии.","- Не делай сайт похожим на типовой шаблон конструктора.","","Технические требования:","- Верни полностью готовый файл index.html с HTML, CSS и JavaScript внутри.","- Не используй обязательные платные сервисы и API.","- Проверь корректность ссылок, адаптивность и отсутствие неработающих элементов.","- Сделай код структурированным и удобным для последующего редактирования.","- Используй только предоставленные данные и материалы.","- В конце кратко перечисли, какие данные нужно уточнить перед публикацией, если такие остались.","","Ниже приведён структурированный бриф клиента. Он является источником фактов для сайта.","",b].join("\n")}
+function send(){
+ if(S.busy)return;var E=check();if(E.length){S.step=E[0].s;showErr(E);return}
+ if(!CONFIG.ENDPOINT){S.msg="Отправка пока не настроена владельцем сервиса. Твои ответы сохранены в этом браузере, ничего не потеряется.";render(true);return}
+ var b=brief(),hp=document.getElementById("hp"),body=JSON.stringify({id:S.id,name:S.a.name.trim(),brief:b,prompt:prompt(b),consent_pd:true,consent_terms:true,truth:true,sent_at:new Date().toISOString(),website:hp?hp.value:""});
+ if(body.length>CONFIG.MAXBODY){S.msg="Ответы получились слишком объёмными. Сократи самые длинные тексты и попробуй снова.";render(true);return}
+ S.busy=true;S.msg="";render(true);
+ fetch(CONFIG.ENDPOINT,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:body}).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)throw 0;S.busy=false;S.done=true;try{localStorage.removeItem(KEY)}catch(e){}render();window.scrollTo(0,0)}).catch(function(){S.busy=false;S.msg="Не получилось отправить. Ответы сохранены, попробуй ещё раз.";render(true)})}
+function stor(el){return el.dataset.p=="-1"?S.a:S.pr[+el.dataset.p]}
+var app=document.getElementById("app");
+app.addEventListener("input",function(e){var el=e.target;if(!el.dataset.i||el.type=="radio"||el.type=="checkbox")return;stor(el)[el.dataset.o?el.dataset.i+"_o":el.dataset.i]=el.value;save()});
+app.addEventListener("change",function(e){var el=e.target,i=el.dataset.i;if(!i)return;var s=stor(el),q=findQ(i);
+ if(el.type=="radio")s[i]=q.o[+el.dataset.v];
+ else if(el.type=="checkbox"){if(q.t=="chk")s[i]=el.checked;else{var a=s[i]||[],o=q.o[+el.dataset.v],x=a.indexOf(o);if(el.checked){if(q.max&&a.length>=q.max){el.checked=false;return}a.push(o)}else if(x>-1)a.splice(x,1);s[i]=a}}
+ else return;
+ delete S.err[i+"|"+el.dataset.p];save();render(true)});
+document.addEventListener("click",function(e){var b=e.target.closest("[data-act]");if(!b)return;var x=b.dataset.act;
+ if(x=="start")go(S.step<0?0:S.step);
+ else if(x=="home")go(-1);
+ else if(x=="back")go(S.step-1);
+ else if(x=="next"){var E=check().filter(function(z){return z.s==S.step});if(E.length)showErr(E);else go(S.step+1)}
+ else if(x=="send")send();
+ else if(x=="add"){if(S.pr.length<3){S.pr.push({});save();render(true)}}
+ else if(x=="del"){S.pr.splice(+b.dataset.n,1);save();render(true)}
+ else if(x=="reset"){if(confirm("Удалить все ответы и начать заново? Это нельзя отменить.")){try{localStorage.removeItem(KEY)}catch(e){}S={step:-1,a:{},pr:[],id:uid(),err:{},busy:false,done:false,msg:""};render();window.scrollTo(0,0)}}});
+render();
+})();
+</script>
+</body>
+</html>
